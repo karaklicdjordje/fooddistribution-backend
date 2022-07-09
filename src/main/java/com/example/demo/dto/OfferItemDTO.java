@@ -15,7 +15,7 @@ public class OfferItemDTO {
 
 	private Long id;
 	
-	private Long foodId;
+	private FoodDTO food;
 	
 	private int quantity;
 	

@@ -20,6 +20,8 @@ public interface OfferService {
 	OfferDTO addFoodToOffer(Long offerId, Long foodId);
 
 	OfferDTO findByDate(LocalDate date);
+	
+	List<OfferDTO> findByRestaurantId(Long restaurantId);
 
 	OfferDTO deleteFoodFromOffer(Long offerId, Long foodId);
 

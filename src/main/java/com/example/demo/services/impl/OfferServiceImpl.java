@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,11 +17,13 @@ import org.springframework.stereotype.Service;
 import com.example.demo.dto.OfferDTO;
 import com.example.demo.entities.Offer;
 import com.example.demo.entities.OfferItem;
+import com.example.demo.entities.Restaurant;
 import com.example.demo.exceptions.NotUniqueException;
 import com.example.demo.mappers.OfferItemMapper;
 import com.example.demo.mappers.OfferMapper;
 import com.example.demo.repositories.OfferItemRepository;
 import com.example.demo.repositories.OfferRepository;
+import com.example.demo.repositories.RestaurantRepository;
 import com.example.demo.services.OfferService;
 import com.example.demo.utils.EntityHelper;
 
@@ -29,16 +32,19 @@ import com.example.demo.utils.EntityHelper;
 public class OfferServiceImpl implements OfferService {
 
 	@Autowired
-	OfferRepository offerRepository;
+	private OfferRepository offerRepository;
 
 	@Autowired
-	OfferItemRepository offerItemRepository;
+	private OfferItemRepository offerItemRepository;
 	
 	@Autowired
-	OfferMapper offerMapper;
+	private OfferMapper offerMapper;
 	
 	@Autowired
-	OfferItemMapper offerItemMapper;
+	private OfferItemMapper offerItemMapper;
+	
+	@Autowired
+	private RestaurantRepository restaurantRepository;
 
 	@Override
 	public List<OfferDTO> findAll() {
@@ -157,6 +163,13 @@ public class OfferServiceImpl implements OfferService {
 			} 
 		});
 		offerRepository.saveAll(offers);
+	}
+
+	@Override
+	public List<OfferDTO> findByRestaurantId(Long restaurantId) {
+		Restaurant restaurant = EntityHelper.getEntity(restaurantId, restaurantRepository);
+		List<Offer> offers = offerRepository.findByRestaurantAndExpiredFalse(restaurant);
+		return offers.stream().map(offer -> offerMapper.entityToDTO(offer)).collect(Collectors.toList());
 	}
 	
 

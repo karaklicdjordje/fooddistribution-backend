@@ -3,6 +3,7 @@ package com.example.demo.mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.example.demo.dto.FoodDTO;
 import com.example.demo.dto.OfferItemDTO;
 import com.example.demo.entities.Food;
 import com.example.demo.entities.Offer;
@@ -28,7 +29,7 @@ public class OfferItemMapper {
 
         OfferItemDTO offerItemDTO = new OfferItemDTO();
 
-        offerItemDTO.setFoodId( offerItemFoodId( offerItem ) );
+        offerItemDTO.setFood( offerItemFood( offerItem ) );
         offerItemDTO.setOfferId( offerItemOfferId( offerItem ) );
         offerItemDTO.setId( offerItem.getId() );
         offerItemDTO.setQuantity( offerItem.getQuantity() );
@@ -51,7 +52,7 @@ public class OfferItemMapper {
         return offerItem.build();
     }
 
-    private Long offerItemFoodId(OfferItem offerItem) {
+    private FoodDTO offerItemFood(OfferItem offerItem) {
         if ( offerItem == null ) {
             return null;
         }
@@ -59,11 +60,10 @@ public class OfferItemMapper {
         if ( food == null ) {
             return null;
         }
-        Long id = food.getId();
-        if ( id == null ) {
-            return null;
-        }
-        return id;
+        
+        FoodDTO foodDto = FoodMapper.INSTANCE.entityToDto(food);
+
+        return foodDto;
     }
 
     private Long offerItemOfferId(OfferItem offerItem) {
@@ -86,7 +86,7 @@ public class OfferItemMapper {
             return null;
         }
 
-        Food food = EntityHelper.getEntity(offerItemDTO.getFoodId(), foodRepository);
+        Food food = EntityHelper.getEntity(offerItemDTO.getFood().getId(), foodRepository);
 
         return food;
     }

@@ -68,6 +68,7 @@ public class RestaurantController {
 	public ResponseEntity<HttpStatus> subscribe(@PathVariable Long restaurantId, @PathVariable Long userId){
 		restaurantService.subscribeUserToRestaurant(restaurantId, userId);
 		return ResponseEntity.ok().build();
+		
 	}
 	
 	@DeleteMapping("/{id}")

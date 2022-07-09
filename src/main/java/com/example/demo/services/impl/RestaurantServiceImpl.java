@@ -86,8 +86,11 @@ public class RestaurantServiceImpl implements RestaurantService {
 		Restaurant restaurant = EntityHelper.getEntity(restaurantId, restaurantRepository);
 		User user = EntityHelper.getEntity(userId, userRepository);
 		
-		restaurant.getUsers().add(user);
-		restaurantRepository.save(restaurant);
+//		restaurant.getUsers().add(user);	
+//		restaurantRepository.save(restaurant);
+		
+		user.getRestaurants().add(restaurant);
+		userRepository.save(user);
 		
 	}
 	

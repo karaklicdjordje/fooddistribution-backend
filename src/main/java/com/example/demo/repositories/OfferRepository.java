@@ -7,8 +7,8 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-
 import com.example.demo.entities.Offer;
+import com.example.demo.entities.Restaurant;
 
 @Repository
 public interface OfferRepository extends JpaRepository<Offer, Long> {
@@ -16,5 +16,7 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
 	public Optional<Offer> findByDate(LocalDate date);
 	
 	public List<Offer> findByExpired(boolean expired);
+	
+	public List<Offer> findByRestaurantAndExpiredFalse(Restaurant restaurant);
 
 }

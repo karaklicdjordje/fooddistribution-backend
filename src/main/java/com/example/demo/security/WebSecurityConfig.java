@@ -102,7 +102,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configure(WebSecurity web) throws Exception {
 		// TokenAuthenticationFilter ce ignorisati sve ispod navedene putanje
 		web.ignoring().antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "/favicon.ico", "/**/*.html",
-				"/**/*.css", "/**/*.js");
+				"/**/*.css", "/**/*.js", "/swagger-ui/**", "/v3/api-docs/**");
+		
 	}
 	
 	@Bean
@@ -120,5 +121,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return source;
 	
 	}
+	
+	
 
 }

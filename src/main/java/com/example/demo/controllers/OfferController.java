@@ -53,6 +53,11 @@ public class OfferController {
 		return new ResponseEntity<OfferDTO>(offerService.findByDate(date), HttpStatus.OK);
 	}
 	
+	@GetMapping("/findbyrestaurant/{restaurantId}")
+	public ResponseEntity<List<OfferDTO>> findByRestaurant(@PathVariable Long restaurantId){
+		return new ResponseEntity<List<OfferDTO>>(offerService.findByRestaurantId(restaurantId), HttpStatus.OK);
+	}
+	
 	@PostMapping
 	public ResponseEntity<?> createOffer(@Valid @RequestBody OfferDTO offerDto, BindingResult result){
 		{
